@@ -20,7 +20,7 @@ namespace MotorLog {
         ctre::phoenix::StatusCode originalCode;
     };
 
-    ctre::phoenix6::hardware::TalonFX testMotor{0};
+    static ctre::phoenix6::hardware::TalonFX testMotor{0};
     void test(); 
         
     //MotorLog::ReadableStatusCode ParseStatusCode(ctre::phoenix::StatusCode code);
