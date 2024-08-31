@@ -15,14 +15,14 @@ namespace MotorLog {
     };
 
     struct ReadableStatusCode {
-        std::string status;
+        std::string name;
+        std::string description;
         enum severityLevel severity;
-        ctre::phoenix::StatusCode originalCode;
     };
 
-    ctre::phoenix6::hardware::TalonFX testMotor{0};
-    void test(); 
+    //ctre::phoenix6::hardware::TalonFX testMotor{0};
+    //void test(); 
         
-    //MotorLog::ReadableStatusCode ParseStatusCode(ctre::phoenix::StatusCode code);
+    MotorLog::ReadableStatusCode ParseStatusCode(ctre::phoenix::StatusCode code);
 
 }

@@ -1,14 +1,17 @@
 #include "MotorLog.h"
 #include "magic_enum.hpp"
 
-/*
+
 MotorLog::ReadableStatusCode MotorLog::ParseStatusCode(ctre::phoenix::StatusCode code) {
-    std::string error = magic_enum::enum_name(code.Get);
-    enum MotorLog::severityLevel level;
+    
+    //enum MotorLog::severityLevel level;
+    MotorLog::ReadableStatusCode ReadableCode;
+    ReadableCode.name = code.GetName();
+    ReadableCode.description = code.GetDescription();
 
     switch(code) {
         case ctre::phoenix::StatusCode::OK:
-            level = OK;
+            ReadableCode.severity = OK;
             break;
         case ctre::phoenix::StatusCode::EcuIsNotPresent:
         case ctre::phoenix::StatusCode::NoDevicesOnBus:
@@ -21,7 +24,7 @@ MotorLog::ReadableStatusCode MotorLog::ParseStatusCode(ctre::phoenix::StatusCode
         case ctre::phoenix::StatusCode::SensorNotPresent:
         case ctre::phoenix::StatusCode::GeneralError:
         case ctre::phoenix::StatusCode::MechanismFaulted:
-            level = ERROR;
+            ReadableCode.severity = ERROR;
             break;
         case ctre::phoenix::StatusCode::GeneralWarning:
         case ctre::phoenix::StatusCode::ControlModeNotValid:
@@ -29,18 +32,11 @@ MotorLog::ReadableStatusCode MotorLog::ParseStatusCode(ctre::phoenix::StatusCode
         case ctre::phoenix::StatusCode::WrongRemoteLimitSwitchSource:
         case ctre::phoenix::StatusCode::DoubleVoltageCompensatingWPI:
         case ctre::phoenix::StatusCode::IncompatibleMode:
-            level = WARNING;
+            ReadableCode.severity = WARNING;
             break;
         default:
-            level = NOTAPPLICABLE;
+            ReadableCode.severity = NOTAPPLICABLE;
     }
-}
-*/
 
-void MotorLog::test() {
-    ctre::phoenix6::configs::TalonFXConfiguration test_config{};
-    testMotor.GetConfigurator().Apply(test_config);
-    ctre::phoenix::StatusCode code = testMotor.SetControl(ctre::phoenix6::controls::VoltageOut{units::volt_t{1.0}});
-    std::cout << code.GetName();
-
+    return ReadableCode;
 }
