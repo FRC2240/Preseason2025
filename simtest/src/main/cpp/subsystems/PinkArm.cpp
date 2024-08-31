@@ -22,7 +22,14 @@ frc2::CommandPtr PinkArm::SetExtention(units::meter_t distance)
         req.EnableFOC = 1;
 
         this->m_left_extention.SetControl(req);
-    },{this} ).Until();
+    },{this} ).Until( [this, distance] {
+        return CONSTANTS::IN_THRESHOLD<units::meter_t>(
+        units::meter_t{
+            this->m_left_extention.GetPosition().GetValueAsDouble()*this->turns_to_distance},
+            distance,
+            5_cm
+            );}
+            ) ;
 }
 
 units::degree_t PinkArm::GetAngle()
