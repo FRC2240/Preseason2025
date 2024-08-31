@@ -6,6 +6,8 @@
 
 #include <frc2/command/CommandPtr.h>
 
+#include "MotorLog.h"
+
 class RobotContainer {
  public:
   RobotContainer();
