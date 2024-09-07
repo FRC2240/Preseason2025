@@ -28,7 +28,7 @@ void force_log(severity message_severity, std::string message){
     current_frame.matchtime = frc::Timer::GetMatchTime();
     current_frame.message = message;
     current_frame.severity = message_severity;
-    std::cout<< "[" + current_frame.fpga_timestamp + 
+    //std::cout<< "[" + current_frame.fpga_timestamp + 
 
 }
 

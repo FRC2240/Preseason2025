@@ -1,10 +1,14 @@
 #include <gtest/gtest.h>
+#include "MotorLog.h"
+#include <ctre/phoenix/StatusCodes.h>
 
 class testTest : public testing::Test {
     protected:
-        int a = 1;
+        ctre::phoenix::StatusCode testCode = ctre::phoenix::StatusCode::NoDevicesOnBus;
+        
 };
 
-TEST_F(testTest, OneEqualsOne) {
-  ASSERT_EQ(1,1);
+TEST_F(testTest, StatusCodeSeverityError) {
+    MotorLog::ReadableStatusCode newCode = MotorLog::ParseStatusCode(testCode);
+    EXPECT_NE(newCode.severity, MotorLog::severityLevel::OK);
 }
