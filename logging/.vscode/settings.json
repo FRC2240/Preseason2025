@@ -47,7 +47,6 @@
     "list": "cpp",
     "map": "cpp",
     "set": "cpp",
-    "string": "cpp",
     "unordered_map": "cpp",
     "unordered_set": "cpp",
     "vector": "cpp",
@@ -91,7 +90,6 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "variant": "cpp",
-    "string": "cpp"
+    "variant": "cpp"
   }
 }
