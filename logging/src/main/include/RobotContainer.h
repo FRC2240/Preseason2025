@@ -5,6 +5,9 @@
 #pragma once
 
 #include <frc2/command/CommandPtr.h>
+#include "ForceLog.h"
+
+#include "MotorLog.h"
 
 class RobotContainer {
  public:

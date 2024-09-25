@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-
+#include "ForceLog.h"
 #include <optional>
 
 #include <frc/TimedRobot.h>
