@@ -10,7 +10,6 @@ void Robot::RobotInit() {}
 
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-  m_container.TestCandlePeriodic();
 }
 
 void Robot::DisabledInit() {}
@@ -35,9 +34,12 @@ void Robot::TeleopInit() {
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
   }
+  m_container.TestCandle();
 }
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  m_container.TestCandlePeriodic();
+}
 
 void Robot::TeleopExit() {}
 

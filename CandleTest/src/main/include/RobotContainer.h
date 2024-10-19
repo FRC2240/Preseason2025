@@ -15,9 +15,10 @@
 #include "ctre/phoenix/led/SingleFadeAnimation.h"
 #include "ctre/phoenix/led/TwinkleAnimation.h"
 #include <frc/Timer.h>
+#include <iostream>
 
-constexpr int CANDLE_ID = 1; 
-constexpr int NUM_LEDS = 1; //CHANGEME
+constexpr int CANDLE_ID = 10; //CHANGEME
+constexpr int NUM_LEDS = -1; //CHANGEME
 
 
 class RobotContainer {

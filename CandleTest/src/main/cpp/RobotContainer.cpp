@@ -6,9 +6,7 @@
 
 #include <frc2/command/Commands.h>
 
-
 RobotContainer::RobotContainer() {
-  TestCandle();
 }
 
 void RobotContainer::TestCandle(){
@@ -24,6 +22,7 @@ void RobotContainer::TestCandle(){
 
 void RobotContainer::TestCandlePeriodic() {
   if (timer.Get() > units::second_t{10}) {
+    std::cout << "tick";
     timer.Restart();
     counter++;
     flag = true;
