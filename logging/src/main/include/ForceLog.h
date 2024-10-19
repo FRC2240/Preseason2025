@@ -1,49 +1,46 @@
-#include "frc/Timer.h" 
+#pragma once
+
+#include "frc/Timer.h"
 #include "iostream"
 #include "string"
 #include "atomic"
 #include "fmt/format.h"
-
-enum class severity {
-    Info,
-    Debug,
-    Warning,
-    Error
-};
-
-
-[[depreciated]] class Logframe {
-public:
-std::string message;
-units::second_t fpga_timestamp;
-units::second_t matchtime;
-std::string severity;
-std::atomic_int message_num = 0;
-};
-
+// Shuffuleboard API is compatable with Elastic. Use Elastic, not shuffleboard
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DataLogManager.h>
+#include <frc/Timer.h>
+#include <Elastic.h>
+#include <fmt/color.h>
 
 namespace ForceLog
 {
-    static std::atomic_int total_count = 0;
-    
-// User-facing entrypoint. The user calls this and it calls other functions and logs
-void log(severity message_severity, std::string message){
-    
-    Logframe current_frame;
-    current_frame.fpga_timestamp = frc::Timer::GetFPGATimestamp(); // Use this one
-    current_frame.matchtime = frc::Timer::GetMatchTime();
-    current_frame.message = message;
-    current_frame.severity = message_severity; // This won't compile as Enums *cannot* be casted to strings
-    // TODO: call parse 
+    /// @desc notify the driver about things to know about, but aren't problems
+    /// @param title This is in a slightly larger font in the notification
+    /// @param message the body of the message
+    static void info(std::string title, std::string message = "")
+    {
+        elastic::SendAlert(elastic::Notification{elastic::Notification::Level::INFO, title, message});
+        frc::DataLogManager::Log("[info] " + '(' + std::to_string(frc::Timer::GetFPGATimestamp().value()) + ") " + title + ": " + message + "\n");
+    }
 
-    total_count++;
-}
-
-// Not user facing
-[[nodiscard]] std::string parse(severity message_severity, std::string message, units::second_t time){
-    // This should return a string given severity and message
-    // Keep this a seperate function from severity to allow for unit testing 
-}
-
+    /// @desc notify the driver about problems that interfere with robot functionality and preformance, such as not seeing data in expected ranges
+    /// @param title This is in a slightly larger font in the notification
+    /// @param message the body of the message
+    static void warn(std::string title, std::string message = "")
+    {
+        elastic::SendAlert(elastic::Notification{elastic::Notification::Level::WARNING, title, message});
+        frc::DataLogManager::Log(fmt::format(fmt::emphasis::bold | fg(fmt::color::yellow),
+                                             "[warning] " + '(' + std::to_string(frc::Timer::GetFPGATimestamp().value()) + ") " + title + ": " + message + "\n"));
+    }
+    /// @desc notify the driver about fatal faults. Only use this if things are very wrong
+    /// @param title This is in a slightly larger font in the notification
+    /// @param message the body of the message
+    static void error(std::string title, std::string message = "")
+    {
+        elastic::SendAlert(elastic::Notification{elastic::Notification::Level::ERROR, title, message});
+        frc::DataLogManager::Log(fmt::format(fmt::emphasis::bold | bg(fmt::color::yellow),
+                                             "[error] " + '(' + std::to_string(frc::Timer::GetFPGATimestamp().value()) + ") " + title + ": " + message + "\n"));
+    }
 
 } // namespace ForceLog

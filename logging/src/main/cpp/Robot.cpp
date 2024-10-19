@@ -3,22 +3,29 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
+#include "Elastic.h"
 
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  ForceLog::info("Initalized");
+}
 
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  ForceLog::info("Disabled");
+}
 
 void Robot::DisabledPeriodic() {}
 
 void Robot::DisabledExit() {}
 
 void Robot::AutonomousInit() {
+  ForceLog::warn("Auto", "Auto init");
+  
   m_autonomousCommand = m_container.GetAutonomousCommand();
 
   if (m_autonomousCommand) {
@@ -31,6 +38,7 @@ void Robot::AutonomousPeriodic() {}
 void Robot::AutonomousExit() {}
 
 void Robot::TeleopInit() {
+  ForceLog::error("thing", "bad");
   if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
   }
